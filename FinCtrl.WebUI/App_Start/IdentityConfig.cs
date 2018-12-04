@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using System.Web;
+﻿using FinCtrl.Domain.Entities;
+using FinCtrl.Infrastructure.Contexts;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using FinCtrl.WebUI.Models;
+using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace FinCtrl.WebUI
 {
