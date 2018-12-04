@@ -4,7 +4,7 @@ namespace FinCtrl.Domain.Entities
 {
     public class Financa
     {
-        public Financa(Guid id)
+        public Financa()
         {
             Id = new Guid().ToString().Replace("-","").Substring(0,10).ToUpper();
         }
