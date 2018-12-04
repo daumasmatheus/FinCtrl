@@ -15,7 +15,9 @@ namespace FinCtrl.Domain.Entities
         public string Observacao { get; set; }
         public decimal Valor { get; set; }
         public int TipoId { get; set; }
+        public string UserId { get; set; }
 
         public virtual Tipo Tipo { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

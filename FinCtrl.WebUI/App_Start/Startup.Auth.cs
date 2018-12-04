@@ -15,7 +15,7 @@ namespace FinCtrl.WebUI
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure o contexto db, gerenciador de usuários e gerenciador de login para usar uma única instância por solicitação
-            app.CreatePerOwinContext(ApplicationDbContext.Create);
+            app.CreatePerOwinContext(FinCtrlDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
 
