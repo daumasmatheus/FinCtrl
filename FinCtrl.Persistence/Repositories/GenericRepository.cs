@@ -1,7 +1,10 @@
 ﻿using FinCtrl.Infrastructure.Contexts;
 using FinCtrl.Persistence.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace FinCtrl.Persistence.Repositories
@@ -34,6 +37,11 @@ namespace FinCtrl.Persistence.Repositories
         public async Task<T> Find(string id)
         {
             return await _context.Set<T>().FindAsync(id);
+        }
+
+        public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
+        {
+            return _context.Set<T>().Where(predicate);
         }
 
         public async Task<IEnumerable<T>> GetAll()

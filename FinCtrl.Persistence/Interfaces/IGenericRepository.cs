@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace FinCtrl.Persistence.Interfaces
@@ -8,6 +10,7 @@ namespace FinCtrl.Persistence.Interfaces
         void Add(T entity);
         Task Delete(string id);
         Task<T> Find(string id);
+        IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
         Task<IEnumerable<T>> GetAll();
         void Edit(T entity);
     }
