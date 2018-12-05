@@ -6,7 +6,7 @@ namespace FinCtrl.Domain.Entities
     {
         public Financa()
         {
-            Id = new Guid().ToString().Replace("-","").Substring(0,10).ToUpper();
+            Id = Guid.NewGuid().ToString().Replace("-","").Substring(0,10).ToUpper();
         }
 
         public string Id { get; set; }

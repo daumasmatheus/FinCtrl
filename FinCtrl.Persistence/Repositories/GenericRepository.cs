@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace FinCtrl.Persistence.Repositories
 {
@@ -23,9 +22,9 @@ namespace FinCtrl.Persistence.Repositories
             _context.Set<T>().Add(entity);
         }
 
-        public async Task Delete(string id)
+        public void Delete(string id)
         {
-            var entityToDelete = await _context.Set<T>().FindAsync(id);
+            var entityToDelete = _context.Set<T>().Find(id);
             _context.Set<T>().Remove(entityToDelete);
         }
 
@@ -34,19 +33,19 @@ namespace FinCtrl.Persistence.Repositories
             _context.Entry(entity).State = EntityState.Modified;
         }
 
-        public async Task<T> Find(string id)
+        public T Find(string id)
         {
-            return await _context.Set<T>().FindAsync(id);
+            return _context.Set<T>().Find(id);
         }
 
-        public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
+        public T Find(Expression<Func<T, bool>> predicate)
         {
-            return _context.Set<T>().Where(predicate);
+            return _context.Set<T>().Where(predicate).FirstOrDefault();
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public IEnumerable<T> GetAll()
         {
-            return await _context.Set<T>().ToListAsync();
+            return _context.Set<T>().ToList();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using FinCtrl.Domain.Entities;
 using FinCtrl.Infrastructure.EntityConfigurations;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
@@ -12,6 +13,9 @@ namespace FinCtrl.Infrastructure.Contexts
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+
+        public FinCtrlDbContext(DbConnection connection): base(connection, true)
+        { }
 
         public static FinCtrlDbContext Create()
         {
