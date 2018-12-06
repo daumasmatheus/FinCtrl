@@ -1,7 +1,6 @@
 ﻿using FinCtrl.Infrastructure.Contexts;
 using FinCtrl.Persistence.Interfaces;
 using FinCtrl.Persistence.Repositories;
-using System.Threading.Tasks;
 
 namespace FinCtrl.Persistence.UnitOfWork
 {
@@ -10,17 +9,19 @@ namespace FinCtrl.Persistence.UnitOfWork
         private readonly FinCtrlDbContext _context;
 
         public IFinancasRepository financasRepository { get; private set; }
+        public ITipoRepository tipoRepository { get; private set; }
 
         public UnitOfWork(FinCtrlDbContext context)
         {
             _context = context;
 
             financasRepository = new FinancasRepository(_context);
+            tipoRepository = new TipoRepository(_context);
         }
 
-        public async Task SaveChanges()
+        public void SaveChanges()
         {
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }        
     }
 }

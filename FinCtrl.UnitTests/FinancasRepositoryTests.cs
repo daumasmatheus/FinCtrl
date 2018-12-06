@@ -5,16 +5,17 @@ using FinCtrl.Persistence.Repositories;
 using FluentAssertions;
 using NUnit.Framework;
 using System;
+using System.Linq;
 
 namespace FinCtrl.UnitTests
 {
     [TestFixture]
-    public class RepositoryTests
+    public class FinancasRepositoryTests
     {
         private FinCtrlDbContext _context;
         private IFinancasRepository _repo;
 
-        string UserId = new Guid().ToString();
+        string UserId = Guid.NewGuid().ToString();
 
         [SetUp]
         public void SetUp()
@@ -27,8 +28,12 @@ namespace FinCtrl.UnitTests
             using (var ctx = new FinCtrlDbContext(connection))
             {
                 ctx.Users.Add(new ApplicationUser() { Id = UserId, UserName = "Test", PasswordHash = "asdasd" });
+
                 ctx.Tipos.Add(new Tipo() { Id = 1, Nome = "Test" });
+
+                ctx.Financas.Add(new Financa() { Nome = "Test 1", TipoId = 1, Valor = 350, UserId = UserId });
                 ctx.Financas.Add(new Financa() { Nome = "Test 2", TipoId = 1, Valor = 350, UserId = UserId });
+                ctx.Financas.Add(new Financa() { Nome = "Test 3", TipoId = 1, Valor = 350, UserId = UserId });
                 ctx.SaveChanges();
             }
         }
@@ -48,6 +53,14 @@ namespace FinCtrl.UnitTests
 
             data.Nome.Should().Be("Test 2");
             data.Should().NotBeNull();
+        }
+
+        [Test]
+        public void Find_GivenAndUserId_ShouldReturnDataOfTheSpecifiedUser()
+        {
+            var data = _repo.GetAll().Where(x => x.UserId == UserId);
+
+            data.Should().HaveCount(3);
         }
 
         [Test]

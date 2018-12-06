@@ -43,6 +43,11 @@ namespace FinCtrl.Persistence.Repositories
             return _context.Set<T>().Where(predicate).FirstOrDefault();
         }
 
+        public T Find(int id)
+        {
+            return _context.Set<T>().Find(id);
+        }
+
         public IEnumerable<T> GetAll()
         {
             return _context.Set<T>().ToList();

@@ -9,6 +9,7 @@ namespace FinCtrl.Persistence.Interfaces
         void Add(T entity);
         void Delete(string id);        
         T Find(string id);
+        T Find(int id);
         T Find(Expression<Func<T, bool>> predicate);
         IEnumerable<T> GetAll();
         void Edit(T entity);

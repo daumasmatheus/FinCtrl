@@ -1,11 +1,10 @@
-﻿using System.Threading.Tasks;
-
-namespace FinCtrl.Persistence.Interfaces
+﻿namespace FinCtrl.Persistence.Interfaces
 {
     public interface IUnitOfWork
     {
         IFinancasRepository financasRepository { get; }
+        ITipoRepository tipoRepository { get; }
 
-        Task SaveChanges();
+        void SaveChanges();
     }
 }
