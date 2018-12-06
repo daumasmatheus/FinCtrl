@@ -28,6 +28,12 @@ namespace FinCtrl.Persistence.Repositories
             _context.Set<T>().Remove(entityToDelete);
         }
 
+        public void Delete(int id)
+        {
+            var entityToDelete = _context.Set<T>().Find(id);
+            _context.Set<T>().Remove(entityToDelete);
+        }
+
         public void Edit(T entity)
         {
             _context.Entry(entity).State = EntityState.Modified;

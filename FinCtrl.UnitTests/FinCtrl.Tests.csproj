@@ -87,9 +87,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FinancasRepositoryTests.cs" />
+    <Compile Include="Repository\FinancasRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TipoRepositoryTests.cs" />
+    <Compile Include="Repository\TipoRepositoryTests.cs" />
+    <Compile Include="Services\FinancasServicesTests.cs" />
+    <Compile Include="UnitOfWorkTests\UnitOfWorkTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

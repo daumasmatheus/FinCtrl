@@ -5,7 +5,7 @@ using FinCtrl.Persistence.Repositories;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace FinCtrl.UnitTests
+namespace FinCtrl.Tests.Repository
 {
     [TestFixture]
     public class TipoRepositoryTests

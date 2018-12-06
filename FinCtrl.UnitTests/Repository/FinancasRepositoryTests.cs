@@ -7,7 +7,7 @@ using NUnit.Framework;
 using System;
 using System.Linq;
 
-namespace FinCtrl.UnitTests
+namespace FinCtrl.Tests.Repository
 {
     [TestFixture]
     public class FinancasRepositoryTests
