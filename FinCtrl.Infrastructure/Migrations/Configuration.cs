@@ -1,5 +1,7 @@
 namespace FinCtrl.Infrastructure.Migrations
 {
+    using FinCtrl.Domain.Entities;
+    using System.Collections.Generic;
     using System.Data.Entity.Migrations;
 
     internal sealed class Configuration : DbMigrationsConfiguration<FinCtrl.Infrastructure.Contexts.FinCtrlDbContext>
@@ -23,6 +25,14 @@ namespace FinCtrl.Infrastructure.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //            
+
+            IList<Tipo> defaultTipos = new List<Tipo>();
+            defaultTipos.Add(new Tipo() { Id = 1, Nome = "Despesa" });
+            defaultTipos.Add(new Tipo() { Id = 2, Nome = "Rendimento" });
+
+            context.Tipos.AddRange(defaultTipos);
+
+            base.Seed(context);
         }
     }
 }
