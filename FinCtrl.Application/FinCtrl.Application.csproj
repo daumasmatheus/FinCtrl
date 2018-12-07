@@ -42,7 +42,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Financas\FinancasServices.cs" />
-    <Compile Include="Services\Financas\IFinancasServices.cs" />
+    <Compile Include="Interfaces\Financas\IFinancasServices.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
