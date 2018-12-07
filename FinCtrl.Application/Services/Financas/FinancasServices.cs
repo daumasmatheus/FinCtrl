@@ -1,12 +1,14 @@
-﻿using FinCtrl.Domain.Entities;
+﻿using FinCtrl.Application.Interfaces.Financas;
+using FinCtrl.Domain.Entities;
 using FinCtrl.Persistence.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace FinCtrl.Application.Services.Financas
 {
-    public class FinancasServices
+    public class FinancasServices : IFinancasServices
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -18,6 +20,17 @@ namespace FinCtrl.Application.Services.Financas
         public IEnumerable<Financa> GetFinancas()
         {
             return _unitOfWork.financasRepository.GetAll();
+        }
+
+        public IEnumerable<Financa> GetFinancasByType(int tipoId)
+        {
+            return _unitOfWork.financasRepository.GetAll().Where(x => x.TipoId == tipoId);
+        }
+
+        public decimal GetSumOfAllValoresByTipo(int tipoFinanca)
+        {
+            var result = _unitOfWork.financasRepository.GetAll().Where(x => x.TipoId == tipoFinanca);
+            return result.Select(x => x.Valor).Sum();
         }
 
         public Financa Find(string Id)
@@ -35,7 +48,7 @@ namespace FinCtrl.Application.Services.Financas
 
         public bool Delete(string Id)
         {
-            if (String.IsNullOrEmpty(Id))
+            if (String.IsNullOrEmpty(Id) || String.IsNullOrWhiteSpace(Id))
                 throw new ArgumentNullException("Identificador não informado.");
 
             _unitOfWork.financasRepository.Delete(Id);
@@ -58,6 +71,6 @@ namespace FinCtrl.Application.Services.Financas
             _unitOfWork.SaveChanges();
 
             return true;
-        }
+        }        
     }        
 }

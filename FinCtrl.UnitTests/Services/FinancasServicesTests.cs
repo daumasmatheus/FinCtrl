@@ -1,29 +1,42 @@
-﻿using FinCtrl.Infrastructure.Contexts;
+﻿using FinCtrl.Application.Interfaces.Financas;
+using FinCtrl.Application.Services.Financas;
+using FinCtrl.Domain.Entities;
 using FinCtrl.Persistence.Interfaces;
-using FinCtrl.Persistence.UnitOfWork;
 using Moq;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 
 namespace FinCtrl.Tests.Services
 {
     [TestFixture]
     public class FinancasServicesTests
     {
-        private Mock<FinCtrlDbContext> mockContext;
-        private IUnitOfWork unitOfWork;
+        private IFinancasServices financasServices;
+        private Mock<IUnitOfWork> uow;
 
         [SetUp]
         public void TestSetup()
         {
-            mockContext = new Mock<FinCtrlDbContext>();
-            unitOfWork = new UnitOfWork(mockContext.Object);
+            var fakeData = new List<Financa>()
+            {
+                new Financa(){ Nome = "Test 1", TipoId = 1, UserId = Guid.NewGuid().ToString(), Valor = 350}
+            };
+
+            uow = new Mock<IUnitOfWork>();
+            financasServices = new FinancasServices(uow.Object);
         }
 
         [Test]
-        public void SaveChanges_CheckIfSaveChangesIsCalled()
+        public void Find_NoParameterIsPassed_ShouldThrowException()
         {
-            unitOfWork.SaveChanges();
-            mockContext.Verify(x => x.SaveChanges(), Times.Once);
-        }        
+            Assert.Throws<ArgumentNullException>(() => financasServices.Find(""));
+        }
+
+        [Test]
+        public void Delete_NoParameterIsPassed_ShouldThrowException()
+        {
+            Assert.Throws<ArgumentNullException>(() => financasServices.Delete(""));
+        }
     }
 }
