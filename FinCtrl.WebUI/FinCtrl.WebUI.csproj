@@ -308,6 +308,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FinCtrl.Application\FinCtrl.Application.csproj">
+      <Project>{369E3141-265E-4927-B308-657B7A0EA953}</Project>
+      <Name>FinCtrl.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FinCtrl.Domain\FinCtrl.Domain.csproj">
       <Project>{7533181A-17F0-4E58-A65A-EAA51B9E1E62}</Project>
       <Name>FinCtrl.Domain</Name>

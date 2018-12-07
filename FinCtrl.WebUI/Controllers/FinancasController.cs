@@ -14,7 +14,7 @@ namespace FinCtrl.WebUI.Controllers
             _financasServices = financasServices;
         }
 
-        // GET: Financas
+        [HttpGet]
         public ActionResult Index()
         {
             var loggedUserId = User.Identity.GetUserId();
@@ -22,6 +22,14 @@ namespace FinCtrl.WebUI.Controllers
             var result = _financasServices.GetFinancas().Where(x => x.UserId == loggedUserId);
 
             return View(result);
+        }
+
+        [HttpGet]
+        public ActionResult AddFinanca()
+        {
+
+
+            return View();
         }
     }
 }
