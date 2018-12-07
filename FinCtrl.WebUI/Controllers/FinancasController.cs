@@ -48,6 +48,7 @@ namespace FinCtrl.WebUI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult AddFinanca(FinancaViewModel financaViewModel)
         {
             if (ModelState.IsValid)
