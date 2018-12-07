@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace FinCtrl.WebUI.Controllers
 {
+    [Authorize]
     public class FinancasController : Controller
     {
         private readonly IFinancasServices _financasServices;
