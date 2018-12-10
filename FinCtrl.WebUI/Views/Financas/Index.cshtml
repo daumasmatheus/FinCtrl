@@ -4,4 +4,52 @@
     ViewBag.Title = "Minhas Financas";
 }
 
+@if (Model.Count() == 0)
+{
+    <div class="alert alert-warning">
+        <p>Você nao possui registros financeiros no FinCtrl. Clique no botão abaixo para adicionar novos registros</p>
+        @Html.ActionLink("Novo Registro", "AddFinanca", "Financas", null, new { @class = "btn btn-primary" })
+    </div>
+}
 
+@foreach (var financas_anos in Model.Select(x => x.DataEntrada.Year).Distinct())
+{
+    <div class="alert alert-secondary">
+        <h4 class="font-weight-bold">@financas_anos</h4>
+    </div>
+    <div class="row justify-content-around">
+        @foreach (var financas_dados in Model.Where(y => y.DataEntrada.Year == financas_anos).Distinct())
+        {
+            <a href="#" class="col-sm-3 link-details hvr-grow-shadow" data-value="@financas_dados.Id">
+                <div>
+                    <small>@financas_dados.DataEntrada.ToShortDateString()</small>
+                    @if (financas_dados.TipoId == 1)
+                    {
+                        <h3 class="text-danger text-center">-@String.Format("{0:C}", financas_dados.Valor)</h3>
+                    }
+                    else
+                    {
+                        <h3 class="text-success text-center">+@String.Format("{0:C}", financas_dados.Valor)</h3>
+                    }
+                    <p>@financas_dados.Nome</p>
+                </div>
+            </a>
+        }
+    </div>
+}
+
+<!-- Modal -->
+<div class="modal fade" id="financesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detalhes</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="conteudoModal">
+            </div>
+        </div>
+    </div>
+</div>

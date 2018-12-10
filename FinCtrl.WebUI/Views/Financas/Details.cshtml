@@ -1,0 +1,45 @@
+﻿@model FinCtrl.WebUI.ViewModels.FinancaViewModel
+
+<div>
+    <small>@Model.DataEntrada.ToShortDateString()</small>
+    <p class="font-weight-bold">@Model.Nome</p>
+    @if (Model.TipoId == 1)
+    {
+        <p class="text-danger">-@String.Format("{0:C}", Model.Valor)</p>
+    }
+    else
+    {
+        <p class="text-success">+@String.Format("{0:C}", Model.Valor)</p>
+    }
+
+    @if (!String.IsNullOrEmpty(Model.Observacao))
+    {
+        <small>Observação</small>
+        <p>@Model.Observacao</p>
+    }
+    <hr />
+    @Html.ActionLink("Editar", "EditFinanca", "Financas", new { id = Model.Id }, new { @class = "btn btn-outline-warning" })
+    <button class="btn btn-outline-danger" id="btnDelete" data-value="@Model.Id">Deletar</button>
+</div>
+
+<script>
+    var objId = $("#btnDelete").data("value");
+
+    $("#btnDelete").click(function () {
+        if (confirm("Deseja excluir o registro?")) {
+            $.ajax({
+                url: "/Financas/DeleteFinanca",
+                data: { id: objId },
+                type: "POST",
+                success: function () {
+                    alert("Registro excluido com sucesso!!");
+                    window.location.reload();
+                },
+                error: function (err) {
+                    alert("Falha ao excluir o registro");
+                    console.log(err);
+                }
+            });
+        }
+    });
+</script>

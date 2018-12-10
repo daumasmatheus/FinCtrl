@@ -3,6 +3,12 @@
 
 namespace FinCtrl.WebUI.App_Start
 {
+    using FinCtrl.Application.Interfaces.Financas;
+    using FinCtrl.Application.Interfaces.Tipos;
+    using FinCtrl.Application.Services.Financas;
+    using FinCtrl.Application.Services.Tipos;
+    using FinCtrl.Persistence.Interfaces;
+    using FinCtrl.Persistence.UnitOfWork;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
     using Ninject;
     using Ninject.Extensions.Conventions;
@@ -66,6 +72,9 @@ namespace FinCtrl.WebUI.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            kernel.Bind<IFinancasServices>().To<FinancasServices>();
+            kernel.Bind<ITiposService>().To<TiposService>();
+            kernel.Bind<IUnitOfWork>().To<UnitOfWork>();
         }        
     }
 }

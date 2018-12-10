@@ -37,7 +37,17 @@ namespace FinCtrl.WebUI.Controllers
         {
             var financasDetail = _financasServices.Find(Id);
 
-            return PartialView(financasDetail);
+            FinancaViewModel finVm = new FinancaViewModel()
+            {
+                Id = financasDetail.Id,
+                Nome = financasDetail.Nome,
+                DataEntrada = financasDetail.DataEntrada,
+                Observacao = financasDetail.Observacao,             
+                Valor = financasDetail.Valor,
+                TipoId = financasDetail.TipoId
+            };
+
+            return PartialView(finVm);
         }
 
         [HttpGet]
@@ -73,15 +83,30 @@ namespace FinCtrl.WebUI.Controllers
         }
 
         [HttpGet]
-        public ActionResult EditFinanca(string financaId)
+        public ActionResult EditFinanca(string id)
         {
             ViewBag.tipos = new SelectList(_tiposService.GetTipos(), "Id", "Nome");
 
             var userId = User.Identity.GetUserId();
+            var financaToEdit = _financasServices.Find(x => x.Id == id && x.UserId == userId);
 
-            var financaToEdit = _financasServices.Find(x => x.Id == financaId && x.UserId == userId);
+            if (financaToEdit == null)
+            {
+                return HttpNotFound();
+            }
 
-            return View(financaToEdit);
+            FinancaViewModel finVm = new FinancaViewModel()
+            {
+                Id = financaToEdit.Id,
+                Nome = financaToEdit.Nome,
+                DataEntrada = financaToEdit.DataEntrada,
+                Observacao = financaToEdit.Observacao,
+                TipoId = financaToEdit.TipoId,
+                UserId = financaToEdit.UserId,
+                Valor = financaToEdit.Valor
+            };
+
+            return View(finVm);
         }
 
         [HttpPost]
@@ -90,16 +115,20 @@ namespace FinCtrl.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                Financa financaToEdit = new Financa()
+                var userId = User.Identity.GetUserId();
+
+                Financa fin = new Financa()
                 {
+                    Id = financaViewModel.Id,
                     Nome = financaViewModel.Nome,
                     DataEntrada = financaViewModel.DataEntrada,
                     Observacao = financaViewModel.Observacao,
                     TipoId = financaViewModel.TipoId,
+                    UserId = userId,
                     Valor = financaViewModel.Valor
                 };
 
-                _financasServices.Edit(financaToEdit);
+                _financasServices.Edit(fin);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -107,14 +136,16 @@ namespace FinCtrl.WebUI.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
 
-        [HttpGet]
-        public ActionResult DeleteFinanca(string financaId)
+        [HttpPost]
+        public ActionResult DeleteFinanca(string id)
         {
             var userId = User.Identity.GetUserId();
 
-            var financaToDelete = _financasServices.Find(x => x.Id == financaId && x.UserId == userId);
+            var financaToDelete = _financasServices.Find(x => x.Id == id && x.UserId == userId);
 
-            return View(financaToDelete);
+            _financasServices.Delete(financaToDelete.Id);
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
