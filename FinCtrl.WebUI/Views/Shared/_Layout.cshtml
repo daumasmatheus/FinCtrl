@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Meu Aplicativo ASP.NET</title>
@@ -25,9 +25,28 @@
                     <li class="nav-item">
                         @Html.ActionLink("Sobre", "About", "Home", null, new { @class = "nav-link" })
                     </li>
-                    <li class="nav-item">
-                        @Html.ActionLink("Login", "Login", "Account", null, new { @class = "nav-link text-primary" })
-                    </li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Bem Vindo!
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    @Html.ActionLink("Minhas Financas", "Index", "Financas", null, new { @class = "dropdown-item" })
+                                    <a href="javascript:document.getElementById('logoutForm').submit()">Log Out</a>
+                                </div>
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            @Html.ActionLink("Login", "Account", "Login", null, new { @class = "nav-link" })
+                        </li>
+                    }
                 </ul>
             </div>
         </nav>

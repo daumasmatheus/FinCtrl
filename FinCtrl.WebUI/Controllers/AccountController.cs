@@ -384,7 +384,7 @@ namespace FinCtrl.WebUI.Controllers
         }
 
         //
-        // POST: /Account/LogOff
+        // POST: /Account/LogOff        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
