@@ -8,7 +8,10 @@
 {
     <div class="alert alert-warning">
         <p>Você nao possui registros financeiros no FinCtrl. Clique no botão abaixo para adicionar novos registros</p>
-        @Html.ActionLink("Novo Registro", "AddFinanca", "Financas", null, new { @class = "btn btn-outline-primary" })
+        <a href="@Url.Action("AddFinanca", "Financas")" class="btn btn-outline-primary">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            Novo Registro
+        </a>
     </div>
 }
 
@@ -16,8 +19,22 @@
         <div class="card-header">
             <p class="lead text-center">Meu Menu</p>
             <hr />
-            @Html.ActionLink("Novo Registro", "AddFinanca", "Financas", null, new { @class = "btn btn-outline-primary" })
-            @Html.ActionLink("Relatorios Detalhados", "Relatorios", "Financas", null, new { @class = "btn btn-outline-success"})
+            <div class="row">
+                <div class="col-md-6">
+                    <button>test</button>
+                </div>
+                <div class="col-md-6">
+                    <button>Tests</button>
+                </div>
+            </div>
+            <a href="@Url.Action("AddFinanca", "Financas")" class="btn btn-outline-primary">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Novo Registro
+            </a>
+            <a href="@Url.Action("Relatorios", "Financas")" class="btn btn-outline-success">
+                <i class="fa fa-line-chart" aria-hidden="true"></i>
+                Relatorios detalhados
+            </a>
         </div>
         <div class="card-body">
             <p>Total de despesas do ultimo ano: </p>
