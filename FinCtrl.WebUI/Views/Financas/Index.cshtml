@@ -1,16 +1,29 @@
 ﻿@model IEnumerable<FinCtrl.Domain.Entities.Financa>
 
 @{
-    ViewBag.Title = "Minhas Financas";
+    ViewBag.Title = "Meus Registros Financeiros";
 }
 
 @if (Model.Count() == 0)
 {
     <div class="alert alert-warning">
         <p>Você nao possui registros financeiros no FinCtrl. Clique no botão abaixo para adicionar novos registros</p>
-        @Html.ActionLink("Novo Registro", "AddFinanca", "Financas", null, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Novo Registro", "AddFinanca", "Financas", null, new { @class = "btn btn-outline-primary" })
     </div>
 }
+
+    <div class="card">
+        <div class="card-header">
+            <p class="lead text-center">Meu Menu</p>
+            <hr />
+            @Html.ActionLink("Novo Registro", "AddFinanca", "Financas", null, new { @class = "btn btn-outline-primary" })
+            @Html.ActionLink("Relatorios Detalhados", "Relatorios", "Financas", null, new { @class = "btn btn-outline-success"})
+        </div>
+        <div class="card-body">
+            <p>Total de despesas do ultimo ano: </p>
+            <p>Total de rendimentos do ultimo ano: </p>
+        </div>
+    </div>
 
 @foreach (var financas_anos in Model.Select(x => x.DataEntrada.Year).Distinct())
 {

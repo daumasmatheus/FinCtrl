@@ -21,12 +21,32 @@ textarea {
 }
 */
 
+.navbar {
+    margin-bottom: 15px;
+}
+
 .navbar-btns {
     margin-right: 20px;
 }
 
+.link-details {
+    margin: 5px;
+    border-left: 1px solid #d5d5d5;
+    border-bottom: 1px solid #d5d5d5;
+    color: black;
+}
+
+    .link-details:hover {
+        text-decoration: none;
+        color: black;
+    }
+
+.card {
+    margin-bottom: 15px;
+}
+
 .footer {
-    position: absolute;
+    position: fixed;
     right: 0;
     bottom: 0;
     left: 0;
