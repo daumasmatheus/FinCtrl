@@ -30,7 +30,7 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></div>
                         </div>
-                        @Html.TextBoxFor(model => model.DataEntrada, new { @class = "form-control", placeholder = "DD/MM/AAA" })
+                        @Html.EditorFor(model => model.DataEntrada, new { @class = "form-control", placeholder = "DD/MM/AAA" })
                         @Html.ValidationMessageFor(model => model.DataEntrada, "", new { @class = "text-danger" })
                     </div>
                 </div>
