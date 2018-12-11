@@ -18,8 +18,14 @@
         <p>@Model.Observacao</p>
     }
     <hr />
-    @Html.ActionLink("Editar", "EditFinanca", "Financas", new { id = Model.Id }, new { @class = "btn btn-outline-warning" })
-    <button class="btn btn-outline-danger" id="btnDelete" data-value="@Model.Id">Deletar</button>
+    <a href="@Url.Action("EditFinanca", "Financas", new { id = Model.Id})" class="btn btn-outline-warning">
+        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+        Editar
+    </a>
+    <button class="btn btn-outline-danger" id="btnDelete" data-value="@Model.Id">
+        <i class="fa fa-trash" aria-hidden="true"></i>
+        Deletar
+    </button>
 </div>
 
 <script>
