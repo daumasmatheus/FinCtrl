@@ -11,7 +11,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="#">FinCtrl</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -36,20 +36,25 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     @Html.ActionLink("Minhas Financas", "Index", "Financas", null, new { @class = "dropdown-item" })
-                                    <a href="javascript:document.getElementById('logoutForm').submit()">Log Out</a>
+                                    <a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item">Log Out</a>
                                 </div>
                             </li>
                         }
                     }
-                    else
-                    {
-                        <li class="nav-item">
-                            @Html.ActionLink("Login", "Account", "Login", null, new { @class = "nav-link" })
-                        </li>
-                    }
                 </ul>
             </div>
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <form class="form-inline">
+                    @Html.ActionLink("Registrar", "Register", "Account", null, new { @class = "btn btn-sm btn-outline-success navbar-btns" })
+                    @Html.ActionLink("Login", "Login", "Account", null, new { @class = "btn btn-sm btn-outline-primary navbar-btns" })
+                </form>
+            }
         </nav>
+
+
+
+
     </header>
 
     <main>
@@ -58,11 +63,7 @@
         </div>
     </main>
 
-    <footer class="footer">
-        <nav>
-            <p>&copy;FinCtrl - @DateTime.Now.Year</p>
-        </nav>
-    </footer>
+    <footer class="footer"></footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
