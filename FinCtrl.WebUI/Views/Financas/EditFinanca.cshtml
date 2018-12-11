@@ -1,39 +1,59 @@
 ﻿@model FinCtrl.WebUI.ViewModels.FinancaViewModel
 
+@{
+    ViewBag.title = "Editar Registro";
+}
+
 <div class="card">
     <div class="card-header">
-        <h3 class="text-center">Editar registro: @Model.Nome</h3>
+        <h3 class="text-center">@ViewBag.title: @Model.Nome</h3>
     </div>
     <div class="card-body">
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <form>
                 <div class="form-group col-md-4 offset-4">
-                    @Html.LabelFor(model => model.Tipo)
+                    @Html.LabelFor(model => model.Tipo.Nome)
                     @Html.DropDownListFor(model => model.TipoId, (SelectList)ViewBag.tipos, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TipoId, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-4 offset-4">
                     @Html.LabelFor(model => model.Nome)
                     @Html.TextBoxFor(model => model.Nome, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-4 offset-4">
                     @Html.LabelFor(model => model.DataEntrada)
-                    @Html.TextBoxFor(model => model.DataEntrada, new { @class = "form-control" })
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                        </div>
+                        @Html.TextBoxFor(model => model.DataEntrada, new { @class = "form-control", placeholder = "DD/MM/AAA" })
+                        @Html.ValidationMessageFor(model => model.DataEntrada, "", new { @class = "text-danger" })
+                    </div>
                 </div>
                 <div class="form-group col-md-4 offset-4">
                     @Html.LabelFor(model => model.Valor)
-                    @Html.TextBoxFor(model => model.Valor, new { @class = "form-control" })
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fa fa-money" aria-hidden="true"></i></div>
+                        </div>
+                        @Html.TextBoxFor(model => model.Valor, new { @class = "form-control" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Valor, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-4 offset-4">
                     @Html.LabelFor(model => model.Observacao)
-                    @Html.TextBoxFor(model => model.Observacao, new { @class = "form-control" })
+                    @Html.TextAreaFor(model => model.Observacao, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Observacao, "", new { @class = "text-danger" })
                 </div>
                 <div class="col-md-4 offset-4">
                     <button type="submit" class="btn btn-primary">Salvar</button>
                 </div>
             </form>
         }
-        @Html.ActionLink("Voltar", "Index", "Financas", null, new { @class = "btn btn-outline-default"})
+        @Html.ActionLink("Voltar", "Index", "Financas", null, new { @class = "btn btn-outline-secondary" })
     </div>
 </div>

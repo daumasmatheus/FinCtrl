@@ -4,7 +4,6 @@ using FinCtrl.Domain.Entities;
 using FinCtrl.WebUI.ViewModels;
 using Microsoft.AspNet.Identity;
 using System.Linq;
-using System.Net;
 using System.Web.Mvc;
 
 namespace FinCtrl.WebUI.Controllers
@@ -133,7 +132,8 @@ namespace FinCtrl.WebUI.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            ViewBag.tipos = new SelectList(_tiposService.GetTipos(), "Id", "Nome");
+            return View(financaViewModel);
         }
 
         [HttpPost]
