@@ -78,8 +78,8 @@ namespace FinCtrl.WebUI.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            ViewBag.tipos = new SelectList(_tiposService.GetTipos(), "Id", "Nome");
+            return View(financaViewModel);
         }
 
         [HttpGet]

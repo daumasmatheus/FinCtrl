@@ -12,15 +12,17 @@
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
-
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <form>
                 <div class="form-group col-md-4 offset-4">
                     @Html.LabelFor(model => model.Tipo.Nome)                    
                     @Html.DropDownListFor(model => model.TipoId, (SelectList)ViewBag.tipos, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TipoId, "", new { @class = "text-danger"})
                 </div>
                 <div class="form-group col-md-4 offset-4">
                     @Html.LabelFor(model => model.Nome)
                     @Html.TextBoxFor(model => model.Nome, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-4 offset-4">
                     @Html.LabelFor(model => model.DataEntrada)
@@ -29,6 +31,7 @@
                             <div class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></div>
                         </div>
                         @Html.TextBoxFor(model => model.DataEntrada, new { @class = "form-control", placeholder = "DD/MM/AAA" })
+                        @Html.ValidationMessageFor(model => model.DataEntrada, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group col-md-4 offset-4">
@@ -39,10 +42,12 @@
                         </div>
                         @Html.TextBoxFor(model => model.Valor, new { @class = "form-control" })
                     </div>
+                    @Html.ValidationMessageFor(model => model.Valor, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group col-md-4 offset-4">
                     @Html.LabelFor(model => model.Observacao)
                     @Html.TextAreaFor(model => model.Observacao, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Observacao, "", new { @class = "text-danger" })
                 </div>
                 <div class="col-md-4 offset-4">
                     <button type="submit" class="btn btn-primary">Salvar</button>
