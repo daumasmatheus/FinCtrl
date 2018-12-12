@@ -25,31 +25,43 @@
                     <li class="nav-item">
                         @Html.ActionLink("Sobre", "About", "Home", null, new { @class = "nav-link" })
                     </li>
+                </ul>
+                <ul class="navbar-nav">
                     @if (User.Identity.IsAuthenticated)
                     {
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index", "Financas")" class="btn btn-outline-light navbar-btns">Minhas Financas</a>
+                        </li>
+
                         using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                         {
                             @Html.AntiForgeryToken()
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Bem Vindo!
+
+                            <li class="nav-item">
+                                <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-outline-warning navbar-btns">
+                                    <i class="fa fa-power-off" aria-hidden="true"></i>
+                                    Log Out
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    @Html.ActionLink("Minhas Financas", "Index", "Financas", null, new { @class = "dropdown-item" })
-                                    <a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item">Log Out</a>
-                                </div>
                             </li>
                         }
                     }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a href="@Url.Action("Register", "Account")" class="btn btn-outline-success navbar-btns">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                Registrar
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Login", "Account")" class="btn btn-outline-primary navbar-btns">
+                                <i class="fa fa-sign-in" aria-hidden="true"></i>
+                                Login
+                            </a>
+                        </li>
+                    }
                 </ul>
             </div>
-            @if (!User.Identity.IsAuthenticated)
-            {
-                <form class="form-inline">
-                    @Html.ActionLink("Registrar", "Register", "Account", null, new { @class = "btn btn-sm btn-outline-success navbar-btns" })
-                    @Html.ActionLink("Login", "Login", "Account", null, new { @class = "btn btn-sm btn-outline-primary navbar-btns" })
-                </form>
-            }
         </nav>
     </header>
 
@@ -62,7 +74,7 @@
     <footer>
         <div class="footer">
             Matheus Daumas &#169; @DateTime.Now.Year
-        </div>        
+        </div>
     </footer>
 
     @Scripts.Render("~/bundles/jquery")
