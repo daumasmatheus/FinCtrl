@@ -2,7 +2,10 @@
 using FinCtrl.Application.Interfaces.Tipos;
 using FinCtrl.Domain.Entities;
 using FinCtrl.WebUI.ViewModels;
+using Highsoft.Web.Mvc.Charts;
 using Microsoft.AspNet.Identity;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -146,6 +149,48 @@ namespace FinCtrl.WebUI.Controllers
             _financasServices.Delete(financaToDelete.Id);
 
             return RedirectToAction(nameof(Index));
+        }
+        
+        [HttpGet]
+        public ActionResult Relatorios()
+        {
+            var financasPorAno = _financasServices.GetFinancas().Where(d => d.DataEntrada.Year == 2018);
+
+            double totalRendimentos = financasPorAno.Where(t => t.TipoId == 2).Select(v => Convert.ToDouble(v.Valor)).Sum();
+            double totalDespesas = financasPorAno.Where(t => t.TipoId == 1).Select(v => Convert.ToDouble(v.Valor)).Sum();
+
+            List<PieSeriesData> categoryData = new List<PieSeriesData>();
+            categoryData.Add(new PieSeriesData { Name = "Despesas",
+                                                 Y = totalDespesas,
+                                                 Drilldown = "DespesasDetalhes",
+                                                 Color = "rgba(168, 250, 171, 1)"
+            });
+
+            categoryData.Add(new PieSeriesData { Name = "Rendimentos",
+                                                 Y = totalRendimentos,
+                                                 Drilldown = "RendimentosDetalhes",
+                                                 Color = "rgba(150, 8, 8, 1)"
+            });
+
+            List<PieSeriesData> pieDespesasData = new List<PieSeriesData>();
+            foreach (var item in financasPorAno.Where(t => t.TipoId == 1))
+            {
+                pieDespesasData.Add(new PieSeriesData { Name = item.Nome, Y = Convert.ToDouble(item.Valor) });
+            }
+
+            List<PieSeriesData> pieRendimentosData = new List<PieSeriesData>();
+            foreach(var item in financasPorAno.Where(t => t.TipoId == 2))
+            {
+                pieRendimentosData.Add(new PieSeriesData { Name = item.Nome, Y = Convert.ToDouble(item.Valor) });
+            }
+
+
+            ViewData["categoryData"] = categoryData;
+
+            ViewData["despesasData"] = pieDespesasData;
+            ViewData["rendimentosData"] = pieRendimentosData;
+
+            return View();
         }
     }
 }

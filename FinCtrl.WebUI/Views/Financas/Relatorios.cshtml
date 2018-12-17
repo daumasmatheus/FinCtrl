@@ -1,0 +1,88 @@
+﻿<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/drilldown.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+@{
+    ViewBag.Title = "Relatorios";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using Highsoft.Web.Mvc.Charts
+
+@(Html.Highsoft().GetHighcharts(
+    new Highcharts
+    {
+        Title = new Title
+        {
+            Text = "Total de Despesas e Rendimentos"
+        },
+        Subtitle = new Subtitle
+        {
+            Text = "Clique para ver detalhes"
+        },
+        XAxis = new List<XAxis>
+        {
+        new XAxis
+        {
+            Type = XAxisType.Category
+        }
+        },
+        YAxis = new List<YAxis>
+        {
+        new YAxis
+        {
+            Title = new YAxisTitle
+            {
+                Text = "Total percent market share"
+            }
+        }
+        },
+        Legend = new Legend
+        {
+            Enabled = false
+        },
+        Tooltip = new Tooltip
+        {
+            HeaderFormat = "<span style='font-size:11px'>{series.name}</span><br>",
+            PointFormat = "<span style=\"color:{point.color}\">{point.name}</span>: <b>R${point.y:.2f}</b><br/>"
+        },
+
+        PlotOptions = new PlotOptions
+        {
+            Series = new PlotOptionsSeries
+            {
+                DataLabels = new PlotOptionsSeriesDataLabels
+                {
+                    Enabled = true,
+                    Format = "{point.name}: R${point.y:.1f}"
+                }
+            }
+        },
+        Series = new List<Series>
+        {
+            new PieSeries
+            {
+                Name = "Brands",
+                Data = ViewData["categoryData"] as List<PieSeriesData>
+            }
+        },
+        Drilldown = new Drilldown
+        {
+            Series = new List<Series>
+            {
+            new PieSeries
+            {
+                Name = "Despesas",
+                Id = "DespesasDetalhes",
+                Data = ViewData["despesasData"] as List<PieSeriesData>
+            },
+            new PieSeries
+            {
+                Name = "Rendimentos",
+                Id = "RendimentosDetalhes",
+                Data = ViewData["rendimentosData"] as List<PieSeriesData>
+            },            
+        }
+    }
+}, "chart"))

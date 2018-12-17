@@ -18,28 +18,12 @@
     <div class="card">
         <div class="card-header">
             <p class="lead text-center">Meu Menu</p>
-            <hr />
-            <div class="row">
-                <div class="col-md-6">
-                    <button>test</button>
-                </div>
-                <div class="col-md-6">
-                    <button>Tests</button>
-                </div>
-            </div>
+            <hr />            
             <a href="@Url.Action("AddFinanca", "Financas")" class="btn btn-outline-primary">
                 <i class="fa fa-plus" aria-hidden="true"></i>
                 Novo Registro
-            </a>
-            <a href="@Url.Action("Relatorios", "Financas")" class="btn btn-outline-success">
-                <i class="fa fa-line-chart" aria-hidden="true"></i>
-                Relatorios detalhados
-            </a>
-        </div>
-        <div class="card-body">
-            <p>Total de despesas do ultimo ano: </p>
-            <p>Total de rendimentos do ultimo ano: </p>
-        </div>
+            </a>                     
+        </div>        
     </div>
 
 @foreach (var financas_anos in Model.Select(x => x.DataEntrada.Year).Distinct())
