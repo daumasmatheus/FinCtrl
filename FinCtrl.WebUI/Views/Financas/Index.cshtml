@@ -1,4 +1,7 @@
-﻿@model IEnumerable<FinCtrl.Domain.Entities.Financa>
+﻿<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+@model IEnumerable<FinCtrl.Domain.Entities.Financa>
 
 @{
     ViewBag.Title = "Meus Registros Financeiros";
@@ -15,16 +18,29 @@
     </div>
 }
 
-    <div class="card">
-        <div class="card-header">
-            <p class="lead text-center">Meu Menu</p>
-            <hr />            
+<div class="card">
+    <div class="card-header">
+        <p class="lead text-center">Meu Menu</p>
+        <hr />
+        <div class="d-flex justify-content-center">
             <a href="@Url.Action("AddFinanca", "Financas")" class="btn btn-outline-primary">
                 <i class="fa fa-plus" aria-hidden="true"></i>
                 Novo Registro
-            </a>                     
-        </div>        
+            </a>
+            <div class="dropdown" style="margin-left: 15px">
+                <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropdown button
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    @foreach (var item in ViewBag.years)
+                    {
+                        <a href="@Url.Action("Relatorios", "Financas", new { ano = item })" class="dropdown-item">@item</a>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
 @foreach (var financas_anos in Model.Select(x => x.DataEntrada.Year).Distinct())
 {

@@ -27,6 +27,8 @@ namespace FinCtrl.WebUI.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            ViewBag.years = _financasServices.GetFinancas().Select(d => d.DataEntrada.Year).Distinct();
+
             var loggedUserId = User.Identity.GetUserId();
 
             var result = _financasServices.GetFinancas().Where(x => x.UserId == loggedUserId);
@@ -152,9 +154,9 @@ namespace FinCtrl.WebUI.Controllers
         }
         
         [HttpGet]
-        public ActionResult Relatorios()
+        public ActionResult Relatorios(int ano)
         {
-            var financasPorAno = _financasServices.GetFinancas().Where(d => d.DataEntrada.Year == 2018);
+            var financasPorAno = _financasServices.GetFinancas().Where(d => d.DataEntrada.Year == ano);
 
             double totalRendimentos = financasPorAno.Where(t => t.TipoId == 2).Select(v => Convert.ToDouble(v.Valor)).Sum();
             double totalDespesas = financasPorAno.Where(t => t.TipoId == 1).Select(v => Convert.ToDouble(v.Valor)).Sum();
@@ -186,7 +188,6 @@ namespace FinCtrl.WebUI.Controllers
 
 
             ViewData["categoryData"] = categoryData;
-
             ViewData["despesasData"] = pieDespesasData;
             ViewData["rendimentosData"] = pieRendimentosData;
 

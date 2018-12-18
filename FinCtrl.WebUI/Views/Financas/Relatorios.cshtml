@@ -2,15 +2,17 @@
 <script src="https://code.highcharts.com/modules/drilldown.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
+@using Highsoft.Web.Mvc.Charts
+
+
 @{
     ViewBag.Title = "Relatorios";
 }
 
 <h2>@ViewBag.Title</h2>
 
-@using Highsoft.Web.Mvc.Charts
-
-@(Html.Highsoft().GetHighcharts(
+<div class="col-md-12">
+    @(Html.Highsoft().GetHighcharts(
     new Highcharts
     {
         Title = new Title
@@ -86,3 +88,7 @@
         }
     }
 }, "chart"))
+</div>
+<a href="@Url.Action("Index", "Financas")" class="btn btn-outline-secondary">
+    <i class="fa fa-arrow-left" aria-hidden="true"></i>Voltar
+</a>
