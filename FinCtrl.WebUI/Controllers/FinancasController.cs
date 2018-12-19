@@ -46,7 +46,7 @@ namespace FinCtrl.WebUI.Controllers
                 Id = financasDetail.Id,
                 Nome = financasDetail.Nome,
                 DataEntrada = financasDetail.DataEntrada,
-                Observacao = financasDetail.Observacao,             
+                Observacao = financasDetail.Observacao,
                 Valor = financasDetail.Valor,
                 TipoId = financasDetail.TipoId
             };
@@ -152,44 +152,56 @@ namespace FinCtrl.WebUI.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        
+
         [HttpGet]
         public ActionResult Relatorios(int ano)
         {
             var financasPorAno = _financasServices.GetFinancas().Where(d => d.DataEntrada.Year == ano);
 
-            double totalRendimentos = financasPorAno.Where(t => t.TipoId == 2).Select(v => Convert.ToDouble(v.Valor)).Sum();
-            double totalDespesas = financasPorAno.Where(t => t.TipoId == 1).Select(v => Convert.ToDouble(v.Valor)).Sum();
-
-            List<PieSeriesData> categoryData = new List<PieSeriesData>();
-            categoryData.Add(new PieSeriesData { Name = "Despesas",
-                                                 Y = totalDespesas,
-                                                 Drilldown = "DespesasDetalhes",
-                                                 Color = "rgba(168, 250, 171, 1)"
-            });
-
-            categoryData.Add(new PieSeriesData { Name = "Rendimentos",
-                                                 Y = totalRendimentos,
-                                                 Drilldown = "RendimentosDetalhes",
-                                                 Color = "rgba(150, 8, 8, 1)"
-            });
-
-            List<PieSeriesData> pieDespesasData = new List<PieSeriesData>();
-            foreach (var item in financasPorAno.Where(t => t.TipoId == 1))
+            if (financasPorAno.Where(t => t.TipoId == 1).Count() > 2 && financasPorAno.Where(t => t.TipoId == 2).Count() > 2)
             {
-                pieDespesasData.Add(new PieSeriesData { Name = item.Nome, Y = Convert.ToDouble(item.Valor) });
+                double totalRendimentos = financasPorAno.Where(t => t.TipoId == 2).Select(v => Convert.ToDouble(v.Valor)).Sum();
+                double totalDespesas = financasPorAno.Where(t => t.TipoId == 1).Select(v => Convert.ToDouble(v.Valor)).Sum();
+
+                List<PieSeriesData> categoryData = new List<PieSeriesData>();
+
+                categoryData.Add(
+                    new PieSeriesData
+                    {
+                        Name = "Despesas",
+                        Y = totalDespesas,
+                        Drilldown = "DespesasDetalhes",
+                        Color = "rgba(168, 250, 171, 1)"
+                    });
+
+                categoryData.Add(
+                    new PieSeriesData
+                    {
+                        Name = "Rendimentos",
+                        Y = totalRendimentos,
+                        Drilldown = "RendimentosDetalhes",
+                        Color = "rgba(150, 8, 8, 1)"
+                    });
+
+                List<PieSeriesData> pieDespesasData = new List<PieSeriesData>();
+                foreach (var item in financasPorAno.Where(t => t.TipoId == 1))
+                {
+                    pieDespesasData.Add(new PieSeriesData { Name = item.Nome, Y = Convert.ToDouble(item.Valor) });
+                }
+
+                List<PieSeriesData> pieRendimentosData = new List<PieSeriesData>();
+                foreach (var item in financasPorAno.Where(t => t.TipoId == 2))
+                {
+                    pieRendimentosData.Add(new PieSeriesData { Name = item.Nome, Y = Convert.ToDouble(item.Valor) });
+                }
+
+
+                ViewData["categoryData"] = categoryData;
+                ViewData["despesasData"] = pieDespesasData;
+                ViewData["rendimentosData"] = pieRendimentosData;
             }
 
-            List<PieSeriesData> pieRendimentosData = new List<PieSeriesData>();
-            foreach(var item in financasPorAno.Where(t => t.TipoId == 2))
-            {
-                pieRendimentosData.Add(new PieSeriesData { Name = item.Nome, Y = Convert.ToDouble(item.Valor) });
-            }
-
-
-            ViewData["categoryData"] = categoryData;
-            ViewData["despesasData"] = pieDespesasData;
-            ViewData["rendimentosData"] = pieRendimentosData;
+            ViewBag.financasMensagem = "Voce nao possui dados suficientes para gerar o relatorio.";
 
             return View();
         }

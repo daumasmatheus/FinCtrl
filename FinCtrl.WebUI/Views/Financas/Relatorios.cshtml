@@ -11,84 +11,95 @@
 
 <h2>@ViewBag.Title</h2>
 
-<div class="col-md-12">
-    @(Html.Highsoft().GetHighcharts(
-    new Highcharts
-    {
-        Title = new Title
-        {
-            Text = "Total de Despesas e Rendimentos"
-        },
-        Subtitle = new Subtitle
-        {
-            Text = "Clique para ver detalhes"
-        },
-        XAxis = new List<XAxis>
-        {
-        new XAxis
-        {
-            Type = XAxisType.Category
-        }
-        },
-        YAxis = new List<YAxis>
-        {
-        new YAxis
-        {
-            Title = new YAxisTitle
-            {
-                Text = "Total percent market share"
-            }
-        }
-        },
-        Legend = new Legend
-        {
-            Enabled = false
-        },
-        Tooltip = new Tooltip
-        {
-            HeaderFormat = "<span style='font-size:11px'>{series.name}</span><br>",
-            PointFormat = "<span style=\"color:{point.color}\">{point.name}</span>: <b>R${point.y:.2f}</b><br/>"
-        },
 
-        PlotOptions = new PlotOptions
-        {
-            Series = new PlotOptionsSeries
+@if (ViewBag.financasMensagem == null)
+{
+    <div class="col-md-12">
+    @(Html.Highsoft().GetHighcharts(
+            new Highcharts
             {
-                DataLabels = new PlotOptionsSeriesDataLabels
+                Title = new Title
                 {
-                    Enabled = true,
-                    Format = "{point.name}: R${point.y:.1f}"
-                }
-            }
-        },
-        Series = new List<Series>
+                    Text = "Total de Despesas e Rendimentos"
+                },
+                Subtitle = new Subtitle
+                {
+                    Text = "Clique para ver detalhes"
+                },
+                XAxis = new List<XAxis>
+                {
+    new XAxis
+    {
+        Type = XAxisType.Category
+    }
+                },
+                YAxis = new List<YAxis>
+                {
+    new YAxis
+    {
+        Title = new YAxisTitle
         {
-            new PieSeries
-            {
-                Name = "Brands",
-                Data = ViewData["categoryData"] as List<PieSeriesData>
-            }
-        },
-        Drilldown = new Drilldown
-        {
-            Series = new List<Series>
-            {
-            new PieSeries
-            {
-                Name = "Despesas",
-                Id = "DespesasDetalhes",
-                Data = ViewData["despesasData"] as List<PieSeriesData>
-            },
-            new PieSeries
-            {
-                Name = "Rendimentos",
-                Id = "RendimentosDetalhes",
-                Data = ViewData["rendimentosData"] as List<PieSeriesData>
-            },            
+            Text = "Total percent market share"
         }
     }
-}, "chart"))
+                },
+                Legend = new Legend
+                {
+                    Enabled = false
+                },
+                Tooltip = new Tooltip
+                {
+                    HeaderFormat = "<span style='font-size:11px'>{series.name}</span><br>",
+                    PointFormat = "<span style=\"color:{point.color}\">{point.name}</span>: <b>R${point.y:.2f}</b><br/>"
+                },
+
+                PlotOptions = new PlotOptions
+                {
+                    Series = new PlotOptionsSeries
+                    {
+                        DataLabels = new PlotOptionsSeriesDataLabels
+                        {
+                            Enabled = true,
+                            Format = "{point.name}: R${point.y:.1f}"
+                        }
+                    }
+                },
+                Series = new List<Series>
+                {
+        new PieSeries
+        {
+            Name = "Brands",
+            Data = ViewData["categoryData"] as List<PieSeriesData>
+        }
+                },
+                Drilldown = new Drilldown
+                {
+                    Series = new List<Series>
+                    {
+        new PieSeries
+        {
+            Name = "Despesas",
+            Id = "DespesasDetalhes",
+            Data = ViewData["despesasData"] as List<PieSeriesData>
+        },
+        new PieSeries
+        {
+            Name = "Rendimentos",
+            Id = "RendimentosDetalhes",
+            Data = ViewData["rendimentosData"] as List<PieSeriesData>
+        },
+                }
+                }
+            }, "chart"))
 </div>
+}
+
+<div class="alert alert-warning" role="alert">
+    <h4 class="alert-heading">Aviso!</h4>
+    <p>@ViewBag.financasMensagem</p>
+    <p class="mb-0">Adicione mais registros financeiros afim de criarmos os relatorios.</p>
+</div>
+
 <a href="@Url.Action("Index", "Financas")" class="btn btn-outline-secondary">
     <i class="fa fa-arrow-left" aria-hidden="true"></i>Voltar
 </a>
